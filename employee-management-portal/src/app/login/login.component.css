@@ -1,0 +1,14 @@
+.login-button{
+    margin-top: 10px;
+}
+
+input{
+    margin-bottom: 10px;
+}
+
+.login-form{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
