@@ -1,6 +1,8 @@
 package com.example.service.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,15 +11,22 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Employee 
 {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "emp_seq")
+	@SequenceGenerator(name = "emp_seq", sequenceName = "emp_seq", initialValue = 1, allocationSize=1)
 	private int id;
 	
 	@Column(nullable = false)
@@ -58,6 +67,21 @@ public class Employee
 	
 	@OneToOne(mappedBy = "employee",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private User user;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "department_id")
+	private Department department;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "designation_id")
+	private Designation designation;
+	
+	@ManyToOne(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
+	@JoinColumn(name="manager_id",nullable = true)
+	private Employee manager;
+	
+	@OneToMany(mappedBy="manager")
+	private Set<Employee> subordinates = new HashSet<Employee>();
 
 	public int getId() {
 		return id;
@@ -167,7 +191,41 @@ public class Employee
 		return user;
 	}
 
+	@JsonIgnore
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Department getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
+
+	public Designation getDesignation() {
+		return designation;
+	}
+
+	public void setDesignation(Designation designation) {
+		this.designation = designation;
+	}
+
+	public Employee getManager() {
+		return manager;
+	}
+
+	public void setManager(Employee manager) {
+		this.manager = manager;
+	}
+
+	@JsonIgnore
+	public Set<Employee> getSubordinates() {
+		return subordinates;
+	}
+
+	public void setSubordinates(Set<Employee> subordinates) {
+		this.subordinates = subordinates;
 	}
 }
