@@ -82,6 +82,15 @@ public class Employee
 	
 	@OneToMany(mappedBy="manager")
 	private Set<Employee> subordinates = new HashSet<Employee>();
+	
+	@OneToOne(mappedBy = "employee",fetch = FetchType.LAZY)
+	private LeaveLedger leaveLedger;
+	
+	@OneToMany(mappedBy = "employee",fetch = FetchType.LAZY)
+	private Set<LeaveRequest> leaveRequests=new HashSet<LeaveRequest>();
+	
+	@OneToMany(mappedBy = "approver",fetch = FetchType.LAZY)
+	private Set<LeaveRequest> leaveRequestApproved=new HashSet<LeaveRequest>();
 
 	public int getId() {
 		return id;
@@ -227,5 +236,31 @@ public class Employee
 
 	public void setSubordinates(Set<Employee> subordinates) {
 		this.subordinates = subordinates;
+	}
+
+	public LeaveLedger getLeaveLedger() {
+		return leaveLedger;
+	}
+
+	public void setLeaveLedger(LeaveLedger leaveLedger) {
+		this.leaveLedger = leaveLedger;
+	}
+
+	@JsonIgnore
+	public Set<LeaveRequest> getLeaveRequests() {
+		return leaveRequests;
+	}
+
+	public void setLeaveRequests(Set<LeaveRequest> leaveRequests) {
+		this.leaveRequests = leaveRequests;
+	}
+
+	@JsonIgnore
+	public Set<LeaveRequest> getLeaveRequestApproved() {
+		return leaveRequestApproved;
+	}
+
+	public void setLeaveRequestApproved(Set<LeaveRequest> leaveRequestApproved) {
+		this.leaveRequestApproved = leaveRequestApproved;
 	}
 }

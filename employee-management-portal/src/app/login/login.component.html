@@ -1,17 +1,14 @@
-<div class="container">
-    <form class="login-form">
-        <h4 style="margin-bottom: 20px;"><span class="glyphicon glyphicon-lock"></span> Sign-In</h4>
+<body class="text-center">
+    <form class="form-signin" #loginForm="ngForm">
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <div class="form-group">
+            <input type="text" class="form-control" name="userName" [(ngModel)]="userName" id="userName"placeholder="Username" autocomplete="username" required>
+        </div>
 
         <div class="form-group">
-            <label for="userName">User name:</label>
-            <input type="text" class="form-control" name="userName" [(ngModel)]="userName" id="userName" placeholder="user name" autocomplete="username">
+            <input type="password" class="form-control" name="password" [(ngModel)]="password" id="password"placeholder="Password" autocomplete="current-password" required>
         </div>
-    
-        <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" class="form-control" name="password" [(ngModel)]="password" id="password" placeholder="password" autocomplete="current-password">
-        </div>
-        
-        <button type="submit" class="btn btn-primary login-button" (click)="doLogin()">Login</button>
+        <button type="button" class="btn btn-lg btn-primary btn-block" (click)="doLogin()" [disabled]="!loginForm.form.valid">Sign in</button>
+        <p class="mt-5 mb-3 text-muted">&copy; 2020-2021</p>
     </form>
-</div>
+</body>

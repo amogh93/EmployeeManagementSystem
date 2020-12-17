@@ -20,19 +20,19 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#" routerLink="/manageEmployee">
+              <a class="nav-link" href="#" [routerLink]="['/dashboard',{outlets:{'actionModule':['manageEmployee']}}]">
                 <span data-feather="file"></span>
                 Employee(s)
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#" routerLink="/manageDepartment">
+              <a class="nav-link" href="#" [routerLink]="['/dashboard',{outlets:{'actionModule':['manageDepartment']}}]">
                 <span data-feather="shopping-cart"></span>
                 Department(s)
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="#" [routerLink]="['/dashboard',{outlets:{'actionModule':['manageLeave']}}]">
                 <span data-feather="file"></span>
                 Leave(s)
               </a>
@@ -57,7 +57,7 @@
       </nav>
 
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-        <router-outlet></router-outlet>
+        <router-outlet name="actionModule"></router-outlet>
       </main>
     </div>
   </div>

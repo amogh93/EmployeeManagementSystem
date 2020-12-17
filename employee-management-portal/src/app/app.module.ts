@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ManageEmployeeComponent } from './manage-employee/manage-employee.component';
 import { ManageDepartmentComponent } from './manage-department/manage-department.component';
+import { ManageLeaveComponent } from './manage-leave/manage-leave.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ManageDepartmentComponent } from './manage-department/manage-department
     LoginComponent,
     DashboardComponent,
     ManageEmployeeComponent,
-    ManageDepartmentComponent
+    ManageDepartmentComponent,
+    ManageLeaveComponent
   ],
   imports: [
     BrowserModule,
