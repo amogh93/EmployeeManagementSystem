@@ -20,7 +20,7 @@
         <tr *ngFor="let department of departments">
             <td>{{department.id}}</td>
             <td>{{department.name}}</td>
-            <td>{{department.creationDate}}</td>
+            <td>{{department.creationDate | date: 'MMM d, y'}}</td>
             <td>
                 <div class="btn-group btn-group-sm" role="group" aria-label="...">
                   <span class="action-menu" data-toggle="modal" data-target="#staticBackdrop" (click)="onSelect(department.id)">
@@ -56,8 +56,14 @@
             </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" (click)="onSubmit(department.id)" [disabled]="!departmentForm.form.valid">Submit</button>
+          <div *ngIf="error" class="alert alert-danger" role="alert">
+            {{error}}
+          </div>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" #closeBtn>Close</button>
+          <button type="button" class="btn btn-primary" (click)="onSubmit(department.id)" [disabled]="!departmentForm.form.valid" [disabled]="processing">
+            <span *ngIf="!processing">Submit</span>
+            <span *ngIf="processing" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          </button>
         </div>
       </div>
     </div>

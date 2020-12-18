@@ -16,6 +16,7 @@ public class MyUserDetails implements UserDetails
 	private String password;
 	private boolean enabled;
 	private List<GrantedAuthority> authorities;
+	private int employeeId;
 	
 	public MyUserDetails() 
 	{
@@ -30,6 +31,7 @@ public class MyUserDetails implements UserDetails
 		authorities=Arrays.stream(user.getRoles().split(","))
 							.map(SimpleGrantedAuthority::new)
 							.collect(Collectors.toList());
+		employeeId=user.getEmployee().getId();
 	}
 
 	@Override
@@ -72,6 +74,10 @@ public class MyUserDetails implements UserDetails
 	public boolean isEnabled() 
 	{
 		return enabled;
+	}
+
+	public int getEmployeeId() {
+		return employeeId;
 	}
 
 }

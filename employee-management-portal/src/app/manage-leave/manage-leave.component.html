@@ -2,7 +2,7 @@
     <h1 class="h2">Manage leave</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
         <div class="btn-group mr-2">
-            <button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#staticBackdrop">
+            <button class="btn btn-sm btn-outline-secondary" data-toggle="modal" (click)="onReset()" data-target="#staticBackdrop">
                 Request for leave
             </button>
         </div>
@@ -16,12 +16,67 @@
                 <th>#</th>
                 <th>From date</th>
                 <th>To date</th>
-                <th>Number of days</th>
+                <th>Duration</th>
+                <th>Reason</th>
                 <th>Status</th>
-                <th></th>
             </tr>
         </thead>
-        <tbody>
+        <tbody *ngIf="leaveRequests">
+            <tr *ngFor="let leaveRequest of leaveRequests">
+                <td>{{leaveRequest.id}}</td>
+                <td>{{leaveRequest.fromDate | date: 'MMM d, y'}}</td>
+                <td>{{leaveRequest.toDate | date: 'MMM d, y'}}</td>
+                <td>{{leaveRequest.duration}} days</td>
+                <td>{{leaveRequest.reason}}</td>
+                <td>{{leaveRequest.approvalStatus}}</td>
+            </tr>
         </tbody>
     </table>
 </div>
+
+<!--Modal-->
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Request for leave</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form #leaveForm="ngForm">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="from">From*:</label>
+                            <input type="date" name="fromDate" [(ngModel)]="leaveRequest.fromDate" class="form-control" required>
+                        </div>
+                        <div class="form-group col">
+                            <label for="to">To*:</label>
+                            <input type="date" name="toDate" [(ngModel)]="leaveRequest.toDate" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="leaveType">Type*:</label>
+                    <select class="form-control"  id="leaveType" [(ngModel)]="leaveRequest.leaveType" name="leaveType" required>
+                      <option *ngFor="let leaveType of leaveTypes" [value]="leaveType.id">{{leaveType.type}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="reason">Reason*:</label>
+                    <textarea name="reason" class="form-control" id="reason" [(ngModel)]="leaveRequest.reason" rows="2" required></textarea>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <div *ngIf="error" class="alert alert-danger" role="alert">
+                {{error}}
+            </div>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" #closeBtn>Close</button>
+          <button type="button" class="btn btn-primary" (click)="onSubmit()" [disabled]="!leaveForm.form.valid">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>

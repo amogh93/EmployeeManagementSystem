@@ -31,9 +31,13 @@ public class LeaveRequest
 	private String reason;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date requestDate;
+	private Date requestDate=new Date();
 	
 	private char approvalStatus;
+	
+	private int leaveType;
+	
+	private int duration;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date approvalDate;
@@ -94,6 +98,30 @@ public class LeaveRequest
 		this.approvalStatus = approvalStatus;
 	}
 
+	public int getLeaveType() {
+		return leaveType;
+	}
+
+	public void setLeaveType(int leaveType) {
+		this.leaveType = leaveType;
+	}
+
+	/**
+	 * Difference between from_date and to_date
+	 * @return difference in days
+	 */
+	public int getDuration() {
+		return duration;
+	}
+
+	/**
+	 * Difference between from_date and to_date
+	 * @param duration in days
+	 */
+	public void setDuration(int duration) {
+		this.duration = duration;
+	}
+
 	public Date getApprovalDate() {
 		return approvalDate;
 	}
@@ -111,7 +139,7 @@ public class LeaveRequest
 		this.employee = employee;
 	}
 
-	@JsonBackReference
+	@JsonBackReference(value = "approver")
 	public Employee getApprover() {
 		return approver;
 	}

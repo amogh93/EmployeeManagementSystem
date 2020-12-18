@@ -67,4 +67,16 @@ export class RestService{
         const headers=new HttpHeaders({Authorization: 'Basic '+auth});
         return this.http.get<any>("http://localhost:8080/api/v1/designation",{headers});
     }
+
+    public addLeaveRequest(data:String): Observable<String>{
+        const auth=localStorage.getItem('authorization');
+        const headers = { 'content-type': 'application/json','Authorization':'Basic '+auth};
+        return this.http.post<String>("http://localhost:8080/api/v1/leave",data,{headers,responseType:'text' as 'json'});
+    }
+
+    public getAllLeaveRequests(): Observable<any>{
+        const auth=localStorage.getItem('authorization');
+        const headers=new HttpHeaders({Authorization: 'Basic '+auth});
+        return this.http.get<any>("http://localhost:8080/api/v1/leave",{headers});
+    }
 }
